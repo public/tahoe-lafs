@@ -14,7 +14,7 @@ from allmydata import provisioning
 from allmydata.util import idlib, log
 from allmydata.interfaces import IFileNode
 from allmydata.web import filenode, directory, unlinked, status, operations
-from allmydata.web import reliability, storage
+from allmydata.web import reliability, storage, dirnode_js
 from allmydata.web.common import abbreviate_size, getxmlfile, WebError, \
      get_arg, RenderMixin, boolean_of_arg
 
@@ -164,6 +164,10 @@ class Root(rend.Page):
         self.child_named = FileHandler(client)
         self.child_status = status.Status(client.get_history())
         self.child_statistics = status.Statistics(client.stats_provider)
+
+        self.putChild("browser", dirnode_js.DirnodeJS())
+        self.putChild("dirnode.js", nevow_File(resource_filename('allmydata.web', 'dirnode.js')))
+        self.putChild("jquery.js", nevow_File(resource_filename('allmydata.web', 'jquery.js')))
 
     def child_helper_status(self, ctx):
         # the Helper isn't attached until after the Tub starts, so this child
