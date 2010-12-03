@@ -206,6 +206,7 @@ class IntroducerClient(service.Service, Referenceable):
                        "my-version": self._my_version,
                        "oldest-supported": self._oldest_supported,
 
+                       "NEW-EXCITING-THINGY": "WOW!",
                        "service-name": service_name,
                        }
         full_ann_d.update(ann_d)
@@ -313,6 +314,7 @@ class IntroducerClient(service.Service, Referenceable):
 
         for (service_name2,cb,args,kwargs) in self._local_subscribers:
             if service_name2 == service_name:
+                print "delivering announcement, key %r" % (key_s,)
                 eventually(cb, key_s, ann_d, *args, **kwargs)
 
     def remote_set_encoding_parameters(self, parameters):
