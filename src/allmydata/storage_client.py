@@ -188,6 +188,9 @@ class NativeStorageServer(Referenceable):
         self.min_shares = min_shares
         self.client_info = client_info
 
+        if "storage-URL" in ann_d:
+            print "storage-URL", ann_d["storage-URL"]
+
         assert "anonymous-storage-FURL" in ann_d, ann_d
         furl = str(ann_d["anonymous-storage-FURL"])
         m = re.match(r'pb://(\w+)@', furl)
@@ -332,6 +335,11 @@ class NativeStorageServer(Referenceable):
 
     def get_rref(self):
         return self.rref
+
+    def get_storage_URL(self):
+        if "storage-URL" in ann_d:
+            return str(ann_d["storage-URL"])
+        return None
 
     def _lost(self):
         log.msg(format="lost connection to %(name)s", name=self.get_name(),
