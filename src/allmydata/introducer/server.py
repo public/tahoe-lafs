@@ -29,6 +29,9 @@ class IntroducerNode(node.Node):
 
         d = self.when_tub_ready()
         def _publish(res):
+            if self.get_config("node", "discovery", None):
+                self.tub.enableDiscovery(self.get_config("node", "discovery", None))
+            
             self.introducer_url = self.tub.registerReference(introducerservice,
                                                              "introducer")
             self.log(" introducer is at %s" % self.introducer_url)
